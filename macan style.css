@@ -1,0 +1,326 @@
+
+document.addEventListener('DOMContentLoaded', () => {
+
+
+
+  const preventImageDefaultDrag = (carouselElement) => {
+    if (!carouselElement) return;
+    const images = carouselElement.querySelectorAll('img');
+    images.forEach((img) => {
+      img.addEventListener('dragstart', (e) => e.preventDefault());
+    });
+  };
+
+  const enableMouseDragScroll = (carousel, speed = 1.5) => {
+    if (!carousel) return;
+
+    let isDown = false;
+    let startX;
+    let scrollLeft;
+
+    carousel.addEventListener('mousedown', (e) => {
+      isDown = true;
+      carousel.classList.add('dragging');
+      startX = e.pageX - carousel.offsetLeft;
+      scrollLeft = carousel.scrollLeft;
+    });
+
+    const endDragging = () => {
+      isDown = false;
+      carousel.classList.remove('dragging');
+    };
+
+    carousel.addEventListener('mouseleave', endDragging);
+    carousel.addEventListener('mouseup', endDragging);
+    window.addEventListener('mouseup', endDragging);
+
+    carousel.addEventListener('mousemove', (e) => {
+      if (!isDown) return;
+      e.preventDefault();
+      const x = e.pageX - carousel.offsetLeft;
+      const walk = (x - startX) * speed;
+      carousel.scrollLeft = scrollLeft - walk;
+    });
+
+    // Touch support
+    carousel.addEventListener('touchstart', (e) => {
+      startX = e.touches[0].pageX - carousel.offsetLeft;
+      scrollLeft = carousel.scrollLeft;
+    }, { passive: true });
+
+    carousel.addEventListener('touchmove', (e) => {
+      const x = e.touches[0].pageX - carousel.offsetLeft;
+      const walk = (x - startX) * speed;
+      carousel.scrollLeft = scrollLeft - walk;
+    }, { passive: true });
+  };
+
+  const enableWheelScroll = (carousel) => {
+    if (!carousel) return;
+    carousel.addEventListener('wheel', (e) => {
+      if (e.deltaY !== 0) {
+        e.preventDefault();
+        carousel.scrollLeft += e.deltaY;
+      }
+    }, { passive: false });
+  };
+
+  const setupArrowScroll = (carousel, prevBtn, nextBtn, distance) => {
+    const getScrollAmount = (cardSelector) => {
+      if (distance) return distance;
+      const card = carousel.querySelector(cardSelector);
+      if (!card) return 300;
+      const style = getComputedStyle(carousel);
+      const gap = parseFloat(style.gap) || 20;
+      return card.offsetWidth + gap;
+    };
+
+    nextBtn?.addEventListener('click', (e) => {
+      e.preventDefault();
+      carousel.scrollBy({ left: getScrollAmount('.card, .perf-card'), behavior: 'smooth' });
+    });
+
+    prevBtn?.addEventListener('click', (e) => {
+      e.preventDefault();
+      carousel.scrollBy({ left: -getScrollAmount('.card, .perf-card'), behavior: 'smooth' });
+    });
+  };
+
+  const setupDotsSync = (carousel, dots) => {
+    if (!carousel || !dots || dots.length === 0) return;
+    carousel.addEventListener('scroll', () => {
+      const maxScroll = carousel.scrollWidth - carousel.clientWidth;
+      const scrollPercent = maxScroll > 0 ? carousel.scrollLeft / maxScroll : 0;
+      const activeIndex = Math.round(scrollPercent * (dots.length - 1));
+      dots.forEach((dot, i) => dot.classList.toggle('active', i === activeIndex));
+    });
+  };
+
+
+  // ---------- 1. Hero Section - Video Play/Pause ----------
+
+  const heroPlayPauseBtn = document.querySelector('.hero-playpause');
+  const heroVideo = document.querySelector('.hero-bg-media');
+
+  if (heroPlayPauseBtn && heroVideo) {
+    heroPlayPauseBtn.addEventListener('click', () => {
+      if (heroVideo.paused) {
+        heroVideo.play();
+        heroPlayPauseBtn.textContent = '❙❙';
+        heroPlayPauseBtn.setAttribute('aria-label', 'Pause background video');
+      } else {
+        heroVideo.pause();
+        heroPlayPauseBtn.textContent = '▶';
+        heroPlayPauseBtn.setAttribute('aria-label', 'Play background video');
+      }
+    });
+  }
+
+
+  // ---------- 2. Performance Section Carousel ----------
+  // Expects IDs: perfDraggable / perfCarousel, prevCard / perfPrev, nextCard / perfNext
+
+  const perfCarousel = document.getElementById('perfCarousel') || document.getElementById('perfDraggable');
+  const perfPrevBtn = document.getElementById('perfPrev') || document.getElementById('prevCard');
+  const perfNextBtn = document.getElementById('perfNext') || document.getElementById('nextCard');
+  const perfDots = document.querySelectorAll('.performance-section .carousel-dots .dot');
+
+  if (perfCarousel) {
+    preventImageDefaultDrag(perfCarousel);
+    enableMouseDragScroll(perfCarousel, 1.2);
+    setupArrowScroll(perfCarousel, perfPrevBtn, perfNextBtn);
+    setupDotsSync(perfCarousel, perfDots);
+  }
+
+
+  // ---------- 3. Charging Section Carousel(s) ----------
+
+  document.querySelectorAll('.charging-section .cards-container').forEach((carousel) => {
+    const section = carousel.closest('.charging-section');
+    const prevBtn = section.querySelector('.arrow-btn:first-child');
+    const nextBtn = section.querySelector('.arrow-btn:last-child');
+    const dots = section.querySelectorAll('.carousel-dots .dot');
+
+    preventImageDefaultDrag(carousel);
+    enableMouseDragScroll(carousel, 1.2);
+    setupArrowScroll(carousel, prevBtn, nextBtn);
+    setupDotsSync(carousel, dots);
+  });
+
+
+  // ---------- 4. Experience Section - Video Tabs & Progress ----------
+
+  const expVideo = document.querySelector('.exp-bg-video');
+  const expPlayPauseBtn = document.getElementById('playPauseBtn');
+  const expTabs = document.querySelectorAll('.tab-item');
+  let currentTabIndex = 0;
+
+  if (expVideo && expTabs.length > 0) {
+    expVideo.addEventListener('timeupdate', () => {
+      if (!expVideo.duration) return;
+      const progressPercent = (expVideo.currentTime / expVideo.duration) * 100;
+      const activeProgress = expTabs[currentTabIndex].querySelector('.progress-fill');
+      if (activeProgress) {
+        activeProgress.style.width = `${progressPercent}%`;
+      }
+    });
+
+    expVideo.addEventListener('ended', () => {
+      const activeProgress = expTabs[currentTabIndex].querySelector('.progress-fill');
+      if (activeProgress) activeProgress.style.width = '0%';
+
+      expTabs[currentTabIndex].classList.remove('active');
+      currentTabIndex = (currentTabIndex + 1) % expTabs.length;
+      expTabs[currentTabIndex].classList.add('active');
+
+      expVideo.currentTime = 0;
+      expVideo.play();
+    });
+
+    expTabs.forEach((tab, index) => {
+      tab.addEventListener('click', () => {
+        expTabs.forEach((t) => {
+          t.classList.remove('active');
+          const fill = t.querySelector('.progress-fill');
+          if (fill) fill.style.width = '0%';
+        });
+
+        currentTabIndex = index;
+        tab.classList.add('active');
+
+        expVideo.currentTime = 0;
+        expVideo.play();
+        if (expPlayPauseBtn) expPlayPauseBtn.innerHTML = '||';
+      });
+    });
+
+    if (expPlayPauseBtn) {
+      expPlayPauseBtn.addEventListener('click', () => {
+        if (expVideo.paused) {
+          expVideo.play();
+          expPlayPauseBtn.innerHTML = '||';
+        } else {
+          expVideo.pause();
+          expPlayPauseBtn.innerHTML = '&#9654;';
+        }
+      });
+    }
+  }
+
+
+  // ---------- 5. Sound Interaction Section (Hold to Listen) ----------
+
+  const soundBtn = document.getElementById('holdSoundBtn');
+  const audio = document.getElementById('porscheAudio');
+
+  if (soundBtn && audio) {
+    const startSound = (e) => {
+      if (e.cancelable) e.preventDefault();
+      audio.currentTime = 0;
+      audio.play().catch((error) => console.log('Audio play failed:', error));
+      soundBtn.classList.add('is-holding');
+    };
+
+    const stopSound = () => {
+      audio.pause();
+      audio.currentTime = 0;
+      soundBtn.classList.remove('is-holding');
+    };
+
+    soundBtn.addEventListener('mousedown', startSound);
+    soundBtn.addEventListener('mouseup', stopSound);
+    soundBtn.addEventListener('mouseleave', stopSound);
+
+    soundBtn.addEventListener('touchstart', startSound, { passive: false });
+    soundBtn.addEventListener('touchend', stopSound);
+    soundBtn.addEventListener('touchcancel', stopSound);
+  }
+
+
+  // ---------- 6. Responsible Section Carousel (with Dots) ----------
+
+  const respCarousel = document.getElementById('respCarousel');
+  const respPrevBtn = document.getElementById('respPrevBtn');
+  const respNextBtn = document.getElementById('respNextBtn');
+  const respDots = document.querySelectorAll('.resp-section .dot');
+  const respCards = document.querySelectorAll('.resp-card');
+
+  if (respCarousel) {
+    const respScrollDistance = 780;
+
+    preventImageDefaultDrag(respCarousel);
+    enableMouseDragScroll(respCarousel, 1.5);
+    setupArrowScroll(respCarousel, respPrevBtn, respNextBtn, respScrollDistance);
+
+    respCarousel.addEventListener('scroll', () => {
+      const scrollPosition = respCarousel.scrollLeft;
+      respCards.forEach((card, index) => {
+        const cardLeft = card.offsetLeft - respCarousel.offsetLeft;
+        if (Math.abs(scrollPosition - cardLeft) < respScrollDistance / 2) {
+          respDots.forEach((d) => d.classList.remove('active'));
+          if (respDots[index]) respDots[index].classList.add('active');
+        }
+      });
+    });
+  }
+
+
+  // ---------- 7. Compare Models - Filter Toggles ----------
+
+  const toggleBtns = document.querySelectorAll('.toggle-btn');
+  toggleBtns.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      toggleBtns.forEach((b) => b.classList.remove('active'));
+      btn.classList.add('active');
+    });
+  });
+
+  const filterChips = document.querySelectorAll('.filter-chip');
+  filterChips.forEach((chip) => {
+    chip.addEventListener('click', () => {
+      filterChips.forEach((c) => c.classList.remove('active'));
+      chip.classList.add('active');
+    });
+  });
+
+
+  // ---------- 8. Feedback Rating Buttons ----------
+
+  const ratingButtons = document.querySelectorAll('.rating-btn');
+  ratingButtons.forEach((button) => {
+    button.addEventListener('click', () => {
+      ratingButtons.forEach((btn) => btn.classList.remove('active'));
+      button.classList.add('active');
+      const selectedValue = button.getAttribute('data-value');
+      console.log(`User rated: ${selectedValue}`);
+    });
+  });
+
+
+  // ---------- 9. Footer - Scroll To Top ----------
+
+  const scrollTopBtn = document.getElementById('scrollTopBtn');
+  if (scrollTopBtn) {
+    scrollTopBtn.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  }
+
+
+  // ---------- 10. Usability Section Carousel ----------
+  // Expects IDs: usabilityCarousel, usabilityPrev, usabilityNext
+
+  const usabilityCarousel = document.getElementById('usabilityCarousel');
+  const usabilityPrev = document.getElementById('usabilityPrev');
+  const usabilityNext = document.getElementById('usabilityNext');
+
+  if (usabilityCarousel) {
+    const usabilityScrollDist = 360;
+
+    preventImageDefaultDrag(usabilityCarousel);
+    enableMouseDragScroll(usabilityCarousel, 1.5);
+    enableWheelScroll(usabilityCarousel);
+    setupArrowScroll(usabilityCarousel, usabilityPrev, usabilityNext, usabilityScrollDist);
+  }
+
+}); 
