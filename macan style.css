@@ -1,326 +1,336 @@
+/* =========================
+   Google Font
+========================= */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
 
-document.addEventListener('DOMContentLoaded', () => {
+/* =========================
+   Global
+========================= */
 
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
 
+html{
+    scroll-behavior: smooth;
+}
 
-  const preventImageDefaultDrag = (carouselElement) => {
-    if (!carouselElement) return;
-    const images = carouselElement.querySelectorAll('img');
-    images.forEach((img) => {
-      img.addEventListener('dragstart', (e) => e.preventDefault());
-    });
-  };
+body{
+    background: #fff;
+    color: #222;
+    overflow-x: hidden;
+}
 
-  const enableMouseDragScroll = (carousel, speed = 1.5) => {
-    if (!carousel) return;
+section{
+    padding: 90px 0;
+}
 
-    let isDown = false;
-    let startX;
-    let scrollLeft;
+img{
+    max-width: 100%;
+    display: block;
+}
 
-    carousel.addEventListener('mousedown', (e) => {
-      isDown = true;
-      carousel.classList.add('dragging');
-      startX = e.pageX - carousel.offsetLeft;
-      scrollLeft = carousel.scrollLeft;
-    });
+/* =========================
+   Navbar
+========================= */
 
-    const endDragging = () => {
-      isDown = false;
-      carousel.classList.remove('dragging');
-    };
+.navbar{
+    background: #fff;
+    padding: 18px 0;
+    transition: .4s;
+    z-index: 999;
+}
 
-    carousel.addEventListener('mouseleave', endDragging);
-    carousel.addEventListener('mouseup', endDragging);
-    window.addEventListener('mouseup', endDragging);
+.logo h1{
+    font-size: 28px;
+    font-weight: 700;
+    letter-spacing: 3px;
+}
 
-    carousel.addEventListener('mousemove', (e) => {
-      if (!isDown) return;
-      e.preventDefault();
-      const x = e.pageX - carousel.offsetLeft;
-      const walk = (x - startX) * speed;
-      carousel.scrollLeft = scrollLeft - walk;
-    });
+.nav-right i{
+    font-size: 22px;
+    margin-left: 18px;
+    cursor: pointer;
+    transition: .3s;
+}
 
-    // Touch support
-    carousel.addEventListener('touchstart', (e) => {
-      startX = e.touches[0].pageX - carousel.offsetLeft;
-      scrollLeft = carousel.scrollLeft;
-    }, { passive: true });
+.nav-right i:hover{
+    color: #777;
+    transform: scale(1.1);
+}
 
-    carousel.addEventListener('touchmove', (e) => {
-      const x = e.touches[0].pageX - carousel.offsetLeft;
-      const walk = (x - startX) * speed;
-      carousel.scrollLeft = scrollLeft - walk;
-    }, { passive: true });
-  };
+/* =========================
+   Hero
+========================= */
 
-  const enableWheelScroll = (carousel) => {
-    if (!carousel) return;
-    carousel.addEventListener('wheel', (e) => {
-      if (e.deltaY !== 0) {
-        e.preventDefault();
-        carousel.scrollLeft += e.deltaY;
-      }
-    }, { passive: false });
-  };
+.hero{
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding-top: 120px;
+}
 
-  const setupArrowScroll = (carousel, prevBtn, nextBtn, distance) => {
-    const getScrollAmount = (cardSelector) => {
-      if (distance) return distance;
-      const card = carousel.querySelector(cardSelector);
-      if (!card) return 300;
-      const style = getComputedStyle(carousel);
-      const gap = parseFloat(style.gap) || 20;
-      return card.offsetWidth + gap;
-    };
+.hero h1{
+    font-size: 80px;
+    font-weight: 700;
+    color: #111;
+}
 
-    nextBtn?.addEventListener('click', (e) => {
-      e.preventDefault();
-      carousel.scrollBy({ left: getScrollAmount('.card, .perf-card'), behavior: 'smooth' });
-    });
+.hero p{
+    color: #666;
+    line-height: 30px;
+}
 
-    prevBtn?.addEventListener('click', (e) => {
-      e.preventDefault();
-      carousel.scrollBy({ left: -getScrollAmount('.card, .perf-card'), behavior: 'smooth' });
-    });
-  };
+.hero-car{
+    width: 900px;
+    margin: auto;
+    animation: float 4s ease-in-out infinite;
+    transition: .4s;
+}
 
-  const setupDotsSync = (carousel, dots) => {
-    if (!carousel || !dots || dots.length === 0) return;
-    carousel.addEventListener('scroll', () => {
-      const maxScroll = carousel.scrollWidth - carousel.clientWidth;
-      const scrollPercent = maxScroll > 0 ? carousel.scrollLeft / maxScroll : 0;
-      const activeIndex = Math.round(scrollPercent * (dots.length - 1));
-      dots.forEach((dot, i) => dot.classList.toggle('active', i === activeIndex));
-    });
-  };
+.hero-car:hover{
+    transform: scale(1.04);
+}
 
+@keyframes float{
 
-  // ---------- 1. Hero Section - Video Play/Pause ----------
-
-  const heroPlayPauseBtn = document.querySelector('.hero-playpause');
-  const heroVideo = document.querySelector('.hero-bg-media');
-
-  if (heroPlayPauseBtn && heroVideo) {
-    heroPlayPauseBtn.addEventListener('click', () => {
-      if (heroVideo.paused) {
-        heroVideo.play();
-        heroPlayPauseBtn.textContent = '❙❙';
-        heroPlayPauseBtn.setAttribute('aria-label', 'Pause background video');
-      } else {
-        heroVideo.pause();
-        heroPlayPauseBtn.textContent = '▶';
-        heroPlayPauseBtn.setAttribute('aria-label', 'Play background video');
-      }
-    });
-  }
-
-
-  // ---------- 2. Performance Section Carousel ----------
-  // Expects IDs: perfDraggable / perfCarousel, prevCard / perfPrev, nextCard / perfNext
-
-  const perfCarousel = document.getElementById('perfCarousel') || document.getElementById('perfDraggable');
-  const perfPrevBtn = document.getElementById('perfPrev') || document.getElementById('prevCard');
-  const perfNextBtn = document.getElementById('perfNext') || document.getElementById('nextCard');
-  const perfDots = document.querySelectorAll('.performance-section .carousel-dots .dot');
-
-  if (perfCarousel) {
-    preventImageDefaultDrag(perfCarousel);
-    enableMouseDragScroll(perfCarousel, 1.2);
-    setupArrowScroll(perfCarousel, perfPrevBtn, perfNextBtn);
-    setupDotsSync(perfCarousel, perfDots);
-  }
-
-
-  // ---------- 3. Charging Section Carousel(s) ----------
-
-  document.querySelectorAll('.charging-section .cards-container').forEach((carousel) => {
-    const section = carousel.closest('.charging-section');
-    const prevBtn = section.querySelector('.arrow-btn:first-child');
-    const nextBtn = section.querySelector('.arrow-btn:last-child');
-    const dots = section.querySelectorAll('.carousel-dots .dot');
-
-    preventImageDefaultDrag(carousel);
-    enableMouseDragScroll(carousel, 1.2);
-    setupArrowScroll(carousel, prevBtn, nextBtn);
-    setupDotsSync(carousel, dots);
-  });
-
-
-  // ---------- 4. Experience Section - Video Tabs & Progress ----------
-
-  const expVideo = document.querySelector('.exp-bg-video');
-  const expPlayPauseBtn = document.getElementById('playPauseBtn');
-  const expTabs = document.querySelectorAll('.tab-item');
-  let currentTabIndex = 0;
-
-  if (expVideo && expTabs.length > 0) {
-    expVideo.addEventListener('timeupdate', () => {
-      if (!expVideo.duration) return;
-      const progressPercent = (expVideo.currentTime / expVideo.duration) * 100;
-      const activeProgress = expTabs[currentTabIndex].querySelector('.progress-fill');
-      if (activeProgress) {
-        activeProgress.style.width = `${progressPercent}%`;
-      }
-    });
-
-    expVideo.addEventListener('ended', () => {
-      const activeProgress = expTabs[currentTabIndex].querySelector('.progress-fill');
-      if (activeProgress) activeProgress.style.width = '0%';
-
-      expTabs[currentTabIndex].classList.remove('active');
-      currentTabIndex = (currentTabIndex + 1) % expTabs.length;
-      expTabs[currentTabIndex].classList.add('active');
-
-      expVideo.currentTime = 0;
-      expVideo.play();
-    });
-
-    expTabs.forEach((tab, index) => {
-      tab.addEventListener('click', () => {
-        expTabs.forEach((t) => {
-          t.classList.remove('active');
-          const fill = t.querySelector('.progress-fill');
-          if (fill) fill.style.width = '0%';
-        });
-
-        currentTabIndex = index;
-        tab.classList.add('active');
-
-        expVideo.currentTime = 0;
-        expVideo.play();
-        if (expPlayPauseBtn) expPlayPauseBtn.innerHTML = '||';
-      });
-    });
-
-    if (expPlayPauseBtn) {
-      expPlayPauseBtn.addEventListener('click', () => {
-        if (expVideo.paused) {
-          expVideo.play();
-          expPlayPauseBtn.innerHTML = '||';
-        } else {
-          expVideo.pause();
-          expPlayPauseBtn.innerHTML = '&#9654;';
-        }
-      });
+    0%{
+        transform: translateY(0);
     }
-  }
 
+    50%{
+        transform: translateY(-15px);
+    }
 
-  // ---------- 5. Sound Interaction Section (Hold to Listen) ----------
+    100%{
+        transform: translateY(0);
+    }
 
-  const soundBtn = document.getElementById('holdSoundBtn');
-  const audio = document.getElementById('porscheAudio');
+}
 
-  if (soundBtn && audio) {
-    const startSound = (e) => {
-      if (e.cancelable) e.preventDefault();
-      audio.currentTime = 0;
-      audio.play().catch((error) => console.log('Audio play failed:', error));
-      soundBtn.classList.add('is-holding');
-    };
+/* =========================
+   Buttons
+========================= */
 
-    const stopSound = () => {
-      audio.pause();
-      audio.currentTime = 0;
-      soundBtn.classList.remove('is-holding');
-    };
+.btn{
+    border-radius: 40px;
+    transition: .3s;
+}
 
-    soundBtn.addEventListener('mousedown', startSound);
-    soundBtn.addEventListener('mouseup', stopSound);
-    soundBtn.addEventListener('mouseleave', stopSound);
+.btn:hover{
+    transform: translateY(-5px);
+}
 
-    soundBtn.addEventListener('touchstart', startSound, { passive: false });
-    soundBtn.addEventListener('touchend', stopSound);
-    soundBtn.addEventListener('touchcancel', stopSound);
-  }
+/* =========================
+   Cards
+========================= */
 
+.card{
+    border: none;
+    border-radius: 20px;
+    overflow: hidden;
+    transition: .4s;
+}
 
-  // ---------- 6. Responsible Section Carousel (with Dots) ----------
+.card:hover{
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px rgba(0,0,0,.15);
+}
 
-  const respCarousel = document.getElementById('respCarousel');
-  const respPrevBtn = document.getElementById('respPrevBtn');
-  const respNextBtn = document.getElementById('respNextBtn');
-  const respDots = document.querySelectorAll('.resp-section .dot');
-  const respCards = document.querySelectorAll('.resp-card');
+.card img{
+    height: 250px;
+    object-fit: cover;
+    transition: .4s;
+}
+.card:hover img{transform:scale(1.1) ;
+}
 
-  if (respCarousel) {
-    const respScrollDistance = 780;
+.card-body{
+    padding: 25px;
+}
 
-    preventImageDefaultDrag(respCarousel);
-    enableMouseDragScroll(respCarousel, 1.5);
-    setupArrowScroll(respCarousel, respPrevBtn, respNextBtn, respScrollDistance);
+.card-body p{
+    color: #666;
+}/* =========================
+   About
+========================= */
 
-    respCarousel.addEventListener('scroll', () => {
-      const scrollPosition = respCarousel.scrollLeft;
-      respCards.forEach((card, index) => {
-        const cardLeft = card.offsetLeft - respCarousel.offsetLeft;
-        if (Math.abs(scrollPosition - cardLeft) < respScrollDistance / 2) {
-          respDots.forEach((d) => d.classList.remove('active'));
-          if (respDots[index]) respDots[index].classList.add('active');
-        }
-      });
-    });
-  }
+#about img{
+    border-radius: 20px;
+}
 
+#about p{
+    color: #666;
+    line-height: 30px;
+}
 
-  // ---------- 7. Compare Models - Filter Toggles ----------
+/* =========================
+   Gallery
+========================= */
 
-  const toggleBtns = document.querySelectorAll('.toggle-btn');
-  toggleBtns.forEach((btn) => {
-    btn.addEventListener('click', () => {
-      toggleBtns.forEach((b) => b.classList.remove('active'));
-      btn.classList.add('active');
-    });
-  });
+.gallery-img{
+    width: 100%;
+    height: 260px;
+    object-fit: cover;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: transform .4s ease, box-shadow .4s ease;
+}
 
-  const filterChips = document.querySelectorAll('.filter-chip');
-  filterChips.forEach((chip) => {
-    chip.addEventListener('click', () => {
-      filterChips.forEach((c) => c.classList.remove('active'));
-      chip.classList.add('active');
-    });
-  });
+.gallery-img:hover{
+    transform: scale(1.08);
+    box-shadow: 0 20px 40px rgba(0,0,0,.25);
+}
 
+.col-lg-3{
+    overflow: hidden;
+}
 
-  // ---------- 8. Feedback Rating Buttons ----------
+/* =========================
+   Features
+========================= */
 
-  const ratingButtons = document.querySelectorAll('.rating-btn');
-  ratingButtons.forEach((button) => {
-    button.addEventListener('click', () => {
-      ratingButtons.forEach((btn) => btn.classList.remove('active'));
-      button.classList.add('active');
-      const selectedValue = button.getAttribute('data-value');
-      console.log(`User rated: ${selectedValue}`);
-    });
-  });
+.shadow{
+    transition: .4s;
+}
 
+.shadow:hover{
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px rgba(0,0,0,.15)!important;
+}
 
-  // ---------- 9. Footer - Scroll To Top ----------
+.fa-gauge-high,
+.fa-shield-halved,
+.fa-gem{
+    color: #000;
+}
 
-  const scrollTopBtn = document.getElementById('scrollTopBtn');
-  if (scrollTopBtn) {
-    scrollTopBtn.addEventListener('click', () => {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    });
-  }
+/* =========================
+   Contact
+========================= */
 
+.form-control{
+    border: 1px solid #ddd;
+    border-radius: 15px;
+    padding: 15px;
+}
 
-  // ---------- 10. Usability Section Carousel ----------
-  // Expects IDs: usabilityCarousel, usabilityPrev, usabilityNext
+.form-control:focus{
+    border-color: #000;
+    box-shadow: none;
+}
 
-  const usabilityCarousel = document.getElementById('usabilityCarousel');
-  const usabilityPrev = document.getElementById('usabilityPrev');
-  const usabilityNext = document.getElementById('usabilityNext');
+textarea{
+    resize: none;
+}
 
-  if (usabilityCarousel) {
-    const usabilityScrollDist = 360;
+/* =========================
+   Footer
+========================= */
 
-    preventImageDefaultDrag(usabilityCarousel);
-    enableMouseDragScroll(usabilityCarousel, 1.5);
-    enableWheelScroll(usabilityCarousel);
-    setupArrowScroll(usabilityCarousel, usabilityPrev, usabilityNext, usabilityScrollDist);
-  }
+footer{
+    background: #111;
+}
 
-}); 
+footer a{
+    transition: .3s;
+}
+
+footer a:hover{
+    color: #999 !important;
+}
+
+/* =========================
+   Card Animation
+========================= */
+
+.card{
+    animation: fadeUp 1s ease;
+}
+
+@keyframes fadeUp{
+
+    from{
+        opacity: 0;
+        transform: translateY(40px);
+    }
+
+    to{
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+}
+
+/* =========================
+   Scrollbar
+========================= */
+
+::-webkit-scrollbar{
+    width: 10px;
+}
+
+::-webkit-scrollbar-thumb{
+    background: #444;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-track{
+    background: #f5f5f5;
+}
+
+/* =========================
+   Responsive
+========================= */
+
+@media (max-width:992px){
+
+    .hero{
+        text-align: center;
+    }
+
+    .hero h1{
+        font-size: 55px;
+    }
+
+    .hero-car{
+        width: 100%;
+        margin-top: 40px;
+    }
+
+}
+
+@media (max-width:768px){
+
+    .hero h1{
+        font-size: 42px;
+    }
+
+    .display-4{
+        font-size: 32px;
+    }
+
+    .gallery-img{
+        height: 220px;
+    }
+
+}
+
+@media (max-width:576px){
+
+    .hero h1{
+        font-size: 34px;
+    }
+
+    .hero p{
+        font-size: 15px;
+    }
+
+    .logo h1{
+        font-size: 24px;
+    }
+
+}
