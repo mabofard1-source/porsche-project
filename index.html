@@ -1,33 +1,417 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#111">
-  <meta name="description" content="Explore Porsche sports cars and electric performance.">
-  <title>Porsche | Driven by dreams</title>
-  <style>
-    :root{color-scheme:dark;--bg:#0c0c0c;--text:#f5f5f5;--muted:#b9b9b9;--line:#ffffff24;--red:#d5001c}
-    *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,Helvetica,sans-serif}
-    a{color:inherit;text-decoration:none}.topbar{height:78px;padding:0 clamp(20px,6vw,88px);display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line);position:absolute;inset:0 0 auto;z-index:2}
-    .brand{font-size:22px;font-weight:800;letter-spacing:.22em}.topbar nav{display:flex;gap:30px;font-size:13px;letter-spacing:.08em;text-transform:uppercase}.topbar nav a{opacity:.85}.topbar nav a:hover{opacity:1;color:#fff}
-    .hero{min-height:720px;height:100svh;max-height:950px;display:flex;align-items:flex-end;padding:120px clamp(20px,9vw,140px) 92px;background:linear-gradient(90deg,#000b 0%,#0005 48%,transparent 100%),linear-gradient(0deg,#000b,transparent 50%),url('Cover.jpg') center 58%/cover no-repeat}
-    .hero-copy{max-width:610px}.eyebrow{font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:#ddd}.hero h1{font-size:clamp(44px,8vw,94px);line-height:.98;letter-spacing:-.055em;margin:18px 0}.hero p{color:#ddd;line-height:1.65;max-width:460px}.button{display:inline-flex;align-items:center;justify-content:center;margin-top:20px;padding:15px 23px;background:#fff;color:#111;font-weight:700;font-size:13px;letter-spacing:.04em;transition:transform .2s,background .2s}.button:hover{transform:translateY(-3px);background:#eee}
-    section{padding:88px clamp(20px,8vw,120px)}.section-head{display:flex;justify-content:space-between;align-items:end;gap:24px;margin-bottom:30px}.section-head h2{font-size:clamp(30px,4vw,48px);margin:0;letter-spacing:-.04em}.section-head p{color:var(--muted);margin:0}.models{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}.model{position:relative;min-height:350px;overflow:hidden;background:#1b1b1b}.model img{width:100%;height:100%;min-height:350px;object-fit:cover;display:block;transition:transform .5s}.model:hover img{transform:scale(1.04)}.model:after{content:"";position:absolute;inset:35% 0 0;background:linear-gradient(transparent,#000b)}.model-copy{position:absolute;z-index:1;inset:auto 24px 23px}.model-copy h3{font-size:24px;margin:0 0 7px}.model-copy p{font-size:13px;color:#ddd;margin:0}.footer{padding:25px clamp(20px,8vw,120px);border-top:1px solid var(--line);color:var(--muted);font-size:12px}
-    @media(max-width:760px){.topbar{height:66px}.topbar nav{gap:14px;font-size:10px}.brand{font-size:17px}.hero{min-height:620px;background-position:58% center;padding-bottom:62px}.models{grid-template-columns:1fr}.model,.model img{min-height:300px}.section-head{display:block}.section-head p{margin-top:10px}}
-    @media(max-width:430px){.topbar nav{gap:10px}.topbar nav a:last-child{display:none}.brand{letter-spacing:.13em}}
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Porsche - JS</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
 </head>
+
 <body>
-  <header class="topbar"><a class="brand" href="#home" aria-label="Porsche home">PORSCHE</a><nav aria-label="Main navigation"><a href="#home">Home</a><a href="#models">Models</a><a href="https://www.porsche.com/">Porsche.com</a></nav></header>
-  <main>
-    <section class="hero" id="home"><div class="hero-copy"><div class="eyebrow">There is no substitute</div><h1>Driven by<br>dreams.</h1><p>Discover a world shaped by timeless design, unmistakable performance, and the joy of the drive.</p><a class="button" href="#models">Explore the collection</a></div></section>
-    <section id="models"><div class="section-head"><h2>Icons of performance</h2><p>Discover the spirit behind every drive.</p></div><div class="models">
-      <article class="model"><img src="Porsche-911-992-adelante.jpg" alt="Porsche 911 sports car" loading="lazy"><div class="model-copy"><h3>911</h3><p>An icon, in every detail.</p></div></article>
-      <article class="model"><img src="2020-porsche-taycan_100714962_h.jpg" alt="Porsche Taycan" loading="lazy"><div class="model-copy"><h3>Taycan</h3><p>Electric performance, unmistakably Porsche.</p></div></article>
-      <article class="model"><img src="2016_porsche.webp" alt="Porsche sports car" loading="lazy"><div class="model-copy"><h3>Macan</h3><p>Sporty spirit for every journey.</p></div></article>
-    </div></section>
-  </main>
-  <footer class="footer">© Porsche. A concept showcase.</footer>
+    <header class="position-fixed top-0 start-0 w-100 px-4 py-3 porsche-fixed-header">
+        <div class="d-flex justify-content-between align-items-center">
+            <button class="btn text-white d-flex align-items-center gap-2 menu-btn border-0 shadow-none" type="button"
+                data-bs-toggle="offcanvas" data-bs-target="#porscheMenu" aria-controls="porscheMenu">
+                <i class="fa-solid fa-bars fs-4"></i>
+                <span class="d-none d-sm-inline">Menu</span>
+            </button>
+            <div class="logo">
+                <h2 class="porsche-brand text-white text-uppercase tracking-widest m-0 fs-3">PORSCHE</h2>
+            </div>
+            <div class="region-selector d-flex align-items-center">
+                <img src="https://flagcdn.com/w40/eg.png" alt="Egypt Flag" class="rounded-circle flag-icon" width="28"
+                    height="28">
+            </div>
+        </div>
+    </header>
+
+    <div class="hero-section position-relative vh-100 overflow-hidden">
+        <video id="heroVideo" autoplay muted loop playsinline
+            class="bg-video position-absolute top-0 start-0 w-100 h-100">
+            <source src="images/Recording 2026-07-22 153134.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <div class="bg-overlay position-absolute top-0 start-0 w-100 h-100"></div>
+        <main
+            class="h-100 d-flex flex-column justify-content-end align-items-center text-center text-white pb-5 px-3 position-relative">
+            <div class="hero-content max-width-lg">
+                <h1 class="hero-title display-3 fw-medium mb-4">
+                    More freedom<br>per revolution.
+                </h1>
+                <p class="hero-description fs-5 fw-light opacity-90 mx-auto">
+                    The sportiest and lightest open-top 911. Manual shift. High-revving. Highly emotional. The 911 GT3
+                    S/C combines maximum dynamics with limitless driving pleasure – at up to 9,000 1/min. For an
+                    unbridled feeling of freedom.
+                </p>
+                <div class="mt-4">
+                    <button id="scrollBtn" class="btn btn-circle-icon text-white rounded-circle" type="button">
+                        <i class="fa-solid fa-arrow-down"></i>
+                    </button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <div class="offcanvas offcanvas-start porsche-sidebar" tabindex="-1" id="porscheMenu"
+        aria-labelledby="porscheMenuLabel">
+        <div class="offcanvas-header justify-content-end p-4">
+            <button type="button" class="btn-close text-reset shadow-none" data-bs-dismiss="offcanvas"
+                aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body p-0 d-flex h-100">
+            <div class="main-menu-col p-4 w-50">
+                <ul class="list-unstyled menu-list m-0">
+
+                    <li>
+                        <a href="#" class="menu-item active d-flex justify-content-between align-items-center">
+                            <span>Vehicle Purchase</span>
+                            <i class="fa-solid fa-chevron-right icon-arrow"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#model" class="menu-item d-flex justify-content-between align-items-center">
+                            <span>Models</span>
+                            <i class="fa-solid fa-chevron-right icon-arrow"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="menu-item d-flex justify-content-between align-items-center">
+                            <span>Services</span>
+                            <i class="fa-solid fa-chevron-right icon-arrow"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="menu-item d-flex justify-content-between align-items-center">
+                            <span>Experience</span>
+                            <i class="fa-solid fa-chevron-right icon-arrow"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="menu-item d-flex justify-content-between align-items-center">
+                            <span>Find a Dealer</span>
+                            <i class="fa-solid fa-chevron-right icon-arrow"></i>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="sub-menu-col p-4 w-50 flex-grow-1">
+                <ul class="list-unstyled sub-menu-list m-0">
+                    <li>
+                        <a href="#" class="sub-menu-item active d-inline-block">Configure</a>
+                    </li>
+                    <li><a href="#" class="sub-menu-item">Compare Models</a></li>
+                    <li><a href="#" class="sub-menu-item">Find New and Pre-owned Vehicles</a></li>
+                    <li><a href="#" class="sub-menu-item">Saved Vehicles</a></li>
+                    <li><a href="#" class="sub-menu-item">E-Mobility& E-Performance</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <section id="model" class="models-section py-5 bg-white text-dark">
+        <div class="container py-4">
+            <div class="row g-4 mb-5">
+                <div class="col-12 col-md-4">
+                    <a href="macan.html" class="text-decoration-none">
+                        <div class="card border-0 shadow-lg rounded-4 h-100 overflow-hidden position-relative">
+                            <img src="Images/6080.png" alt="Macan Electric" class="w-100 h-100 object-fit-cover">
+                            <div
+                                class="card-overlay position-absolute bottom-0 start-0 w-100 p-4 d-flex justify-content-between align-items-end">
+                                <h4 class="text-white fw-medium m-0 fs-5">Macan Electric.</h4>
+                                <span
+                                    class="btn btn-circle-arrow rounded-circle text-white d-flex align-items-center justify-content-center">
+                                    <i class="fa-solid fa-arrow-right"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-12 col-md-4">
+                    <a href="taycan.html" class="text-decoration-none">
+                        <div class="card border-0 shadow-lg rounded-4 h-100 overflow-hidden position-relative">
+                            <img src="images/6050.png" alt="Taycan" class="w-100 h-100 object-fit-cover">
+                            <div
+                                class="card-overlay position-absolute bottom-0 start-0 w-100 p-4 d-flex justify-content-between align-items-end">
+                                <h4 class="text-white fw-medium m-0 fs-5 lh-sm">Taycan. Now with E-Shift.</h4>
+                                <span
+                                    class="btn btn-circle-arrow rounded-circle text-white d-flex align-items-center justify-content-center flex-shrink-0 ms-2">
+                                    <i class="fa-solid fa-arrow-right"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-12 col-md-4">
+                    <a href="cayenne.html" class="text-decoration-none">
+                        <div class="card border-0 shadow-lg rounded-4 h-100 overflow-hidden position-relative">
+                            <img src="images/6070.png" alt="Cayenne Coupé" class="w-100 h-100 object-fit-cover">
+                            <div
+                                class="card-overlay position-absolute bottom-0 start-0 w-100 p-4 d-flex justify-content-between align-items-end">
+                                <h4 class="text-white fw-medium m-0 fs-5 lh-sm">The new Cayenne Coupé Electric.</h4>
+                                <span
+                                    class="btn btn-circle-arrow rounded-circle text-white d-flex align-items-center justify-content-center flex-shrink-0 ms-2">
+                                    <i class="fa-solid fa-arrow-right"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+            <section id="journeySection" class="journey-section py-4">
+                <div class="container py-2">
+                    <h2 class="journey-title display-4 fw-medium mb-3">Your Porsche journey starts now.</h2>
+
+                    <div class="row g-4 mb-4">
+                        <div class="col-12 col-md-6">
+                            <div class="porsche-model-card position-relative rounded-4 overflow-hidden">
+                                <img src="images/5550.jpg" alt="911" class="card-bg-img w-100 h-100 object-fit-cover">
+                                <div
+                                    class="card-content position-absolute top-0 start-0 w-100 h-100 p-4 d-flex flex-column justify-content-between">
+                                    <div class="text-center pt-2">
+                                        <h2 class="model-logo">911</h2>
+                                    </div>
+                                    <div class="card-bottom">
+                                        <div class="mb-2"><span class="porsche-badge">Gasoline</span></div>
+                                        <div class="d-flex justify-content-between align-items-end">
+                                            <p class="model-desc m-0 text-white-50">Iconic sports car with rear engine;
+                                                2 doors, 2+2 seats.</p>
+                                            <a href="#" class="btn-explore-hover text-decoration-none text-white">
+                                                <span class="explore-text">Explore</span>
+                                                <i class="fa-solid fa-arrow-right"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <div class="porsche-model-card position-relative rounded-4 overflow-hidden">
+                                <img src="images/5520.jpg" alt="718" class="card-bg-img w-100 h-100 object-fit-cover">
+                                <div
+                                    class="card-content position-absolute top-0 start-0 w-100 h-100 p-4 d-flex flex-column justify-content-between">
+                                    <div class="text-center pt-2">
+                                        <h2 class="model-logo">718</h2>
+                                    </div>
+                                    <div class="card-bottom">
+                                        <div class="mb-2"><span class="porsche-badge badge-info">Model unavailable for
+                                                order. Explore available inventory.</span></div>
+                                        <div class="d-flex justify-content-between align-items-end">
+                                            <p class="model-desc m-0 text-white-50">Precise mid-engine sports car; 2
+                                                doors, 2 seats.</p>
+                                            <a href="#" class="btn-explore-hover text-decoration-none text-white">
+                                                <span class="explore-text">Explore</span>
+                                                <i class="fa-solid fa-arrow-right"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row g-4 mb-4">
+                        <div class="col-12 col-md-6">
+                            <div class="porsche-model-card position-relative rounded-4 overflow-hidden">
+                                <img src="images/6070.png" alt="Cayenne"
+                                    class="card-bg-img w-100 h-100 object-fit-cover">
+                                <div
+                                    class="card-content position-absolute top-0 start-0 w-100 h-100 p-4 d-flex flex-column justify-content-between">
+                                    <div class="text-center pt-2">
+                                        <h2 class="model-logo">Cayenne</h2>
+                                    </div>
+                                    <div class="card-bottom">
+                                        <div class="mb-2"><span class="porsche-badge">Hybrid / Gasoline</span></div>
+                                        <div class="d-flex justify-content-between align-items-end">
+                                            <p class="model-desc m-0 text-white-50">The versatile performance SUV.</p>
+                                            <a href="#" class="btn-explore-hover text-decoration-none text-white">
+                                                <span class="explore-text">Explore</span>
+                                                <i class="fa-solid fa-arrow-right"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <div class="porsche-model-card position-relative rounded-4 overflow-hidden">
+                                <img src="images/6050.png" alt="Taycan"
+                                    class="card-bg-img w-100 h-100 object-fit-cover">
+                                <div
+                                    class="card-content position-absolute top-0 start-0 w-100 h-100 p-4 d-flex flex-column justify-content-between">
+                                    <div class="text-center pt-2">
+                                        <h2 class="model-logo">Taycan</h2>
+                                    </div>
+                                    <div class="card-bottom">
+                                        <div class="mb-2"><span class="porsche-badge">Electric</span></div>
+                                        <div class="d-flex justify-content-between align-items-end">
+                                            <p class="model-desc m-0 text-white-50">Pure electric sports sedan.</p>
+                                            <a href="#" class="btn-explore-hover text-decoration-none text-white">
+                                                <span class="explore-text">Explore</span>
+                                                <i class="fa-solid fa-arrow-right"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row g-4">
+                        <div class="col-12 col-md-6">
+                            <div class="porsche-model-card position-relative rounded-4 overflow-hidden">
+                                <img src="images/6080.png" alt="Macan" class="card-bg-img w-100 h-100 object-fit-cover">
+                                <div
+                                    class="card-content position-absolute top-0 start-0 w-100 h-100 p-4 d-flex flex-column justify-content-between">
+                                    <div class="text-center pt-2">
+                                        <h2 class="model-logo">Macan</h2>
+                                    </div>
+                                    <div class="card-bottom">
+                                        <div class="mb-2"><span class="porsche-badge">Electric</span></div>
+                                        <div class="d-flex justify-content-between align-items-end">
+                                            <p class="model-desc m-0 text-white-50">Compact luxury electric SUV.</p>
+                                            <a href="#" class="btn-explore-hover text-decoration-none text-white">
+                                                <span class="explore-text">Explore</span>
+                                                <i class="fa-solid fa-arrow-right"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <div class="porsche-model-card position-relative rounded-4 overflow-hidden">
+                                <img src="images/5530.jpg" alt="Panamera"
+                                    class="card-bg-img w-100 h-100 object-fit-cover">
+                                <div
+                                    class="card-content position-absolute top-0 start-0 w-100 h-100 p-4 d-flex flex-column justify-content-between">
+                                    <div class="text-center pt-2">
+                                        <h2 class="model-logo">Panamera</h2>
+                                    </div>
+                                    <div class="card-bottom">
+                                        <div class="mb-2"><span class="porsche-badge">Hybrid</span></div>
+                                        <div class="d-flex justify-content-between align-items-end">
+                                            <p class="model-desc m-0 text-white-50">Luxurious sports saloon car.</p>
+                                            <a href="#" class="btn-explore-hover text-decoration-none text-white">
+                                                <span class="explore-text">Explore</span>
+                                                <i class="fa-solid fa-arrow-right"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+
+            <section class="py-5 bg-white">
+                <div class="container">
+                    <div class="porsche-banner-card overflow-hidden rounded-4 shadow-lg position-relative">
+                        <div class="row g-0 align-items-stretch">
+                            <div
+                                class="col-lg-5 banner-content-col p-5 d-flex flex-column justify-content-center text-white">
+                                <h2 class="display-6 fw-medium mb-3">Find your new or pre-owned Porsche.</h2>
+                                <p class="text-white-50 mb-4 fs-6 lh-base">
+                                    A Porsche is as individual as its owner. It is always an expression of one's own
+                                    personality. We help you find your personal dream vehicle from authorised Porsche
+                                    Centres.
+                                </p>
+                                <div>
+                                    <a href="#"
+                                        class="btn btn-light rounded-pill px-4 py-3 fw-medium text-dark banner-btn shadow-sm">
+                                        Find your Porsche
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="col-lg-7 banner-img-col position-relative overflow-hidden">
+                                <img src="images/filters_format.webp" alt="Find your Porsche"
+                                    class="position-absolute top-0 start-0 w-100 h-100 object-fit-cover banner-image">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="py-5 bg-white discover-section">
+                <div class="container py-4">
+                    <h2 class="text-center text-dark mb-5 fw-medium section-title"
+                        style="font-size: 2.5rem; letter-spacing: -1.5px;">Discover</h2>
+                    <div class="row g-4">
+                        <div class="col-lg-4 col-md-6">
+                            <div class="card discover-card position-relative overflow-hidden border-0 shadow-sm">
+                                <img src="images/11109.webp" alt="E-Performance"
+                                    class="card-bg-img w-100 h-100 position-absolute top-0 start-0 object-fit-cover">
+                                <div
+                                    class="card-content d-flex flex-column justify-content-between p-4 h-100 position-relative">
+                                    <div class="top-content"></div>
+                                    <div class="bottom-content d-flex justify-content-between align-items-end">
+                                        <div>
+                                            <h3 class="h5 fw-bold text-white mb-0 lh-base">E-Performance
+                                                -<br>Sustainable Mobility</h3>
+                                        </div>
+                                        <a href="#"
+                                            class="btn btn-circle-arrow rounded-circle d-flex align-items-center justify-content-center text-white text-decoration-none flex-shrink-0">
+                                            <i class="fas fa-arrow-right"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4 col-md-6">
+                            <div class="card discover-card position-relative overflow-hidden border-0 shadow-sm">
+                                <img src="images/1110.webp" alt="Porsche Tequipment"
+                                    class="card-bg-img w-100 h-100 position-absolute top-0 start-0 object-fit-cover">
+                                <div
+                                    class="card-content d-flex flex-column justify-content-between p-4 h-100 position-relative">
+                                    <div class="top-content"></div>
+                                    <div class="bottom-content d-flex justify-content-between align-items-end">
+                                        <div>
+                                            <h3 class="h5 fw-bold text-white mb-0 lh-base">Porsche Tequipment</h3>
+                                        </div>
+                                        <a href="#"
+                                            class="btn btn-circle-arrow rounded-circle d-flex align-items-center justify-content-center text-white text-decoration-none flex-shrink-0">
+                                            <i class="fas fa-arrow-right"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4 col-md-6">
+                            <div class="card discover-card position-relative overflow-hidden border-0 shadow-sm">
+                                <img src="images/1111.jpg" alt="Porsche Exclusive Manufaktur"
+                                    class="card-bg-img w-100 h-100 position-absolute top-0 start-0 object-fit-cover">
+                                <div
+                                    class="card-content d-flex flex-column justify-content-between p-4 h-100 position-relative">
+                                    <div class="top-content"></div>
+                                    <div class="bottom-content d-flex justify-content-between align-items-end">
+                                        <div>
+                                            <h3 class="h5 fw-bold text-white mb-0 lh-base">Porsche
+                                                Exclusive<br>Manufaktur</h3>
+                                        </div>
+                                        <a href="#"
+                                            class="btn btn-circle-arrow rounded-circle d-flex align-items-center justify-content-center text-white text-decoration-none flex-shrink-0">
+                                            <i class="fas fa-arrow-right"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <script src="js/bootstrap.bundle.min.js"></script>
+            <script src="js/main.js"></script>
 </body>
+
 </html>

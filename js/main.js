@@ -1,0 +1,139 @@
+document.addEventListener("DOMContentLoaded", () => {
+  const video = document.getElementById("heroVideo");
+  const pauseBtn = document.getElementById("pauseBtn");
+  const scrollBtn = document.getElementById("scrollBtn");
+
+  if (pauseBtn && video) {
+    pauseBtn.addEventListener("click", () => {
+      const icon = pauseBtn.querySelector("i");
+      if (video.paused) {
+        video.play();
+        icon.classList.remove("fa-play");
+        icon.classList.add("fa-pause");
+      } else {
+        video.pause();
+        icon.classList.remove("fa-pause");
+        icon.classList.add("fa-play");
+      }
+    });
+  }
+
+  if (scrollBtn) {
+    scrollBtn.addEventListener("click", () => {
+      window.scrollTo({
+        top: window.innerHeight,
+        behavior: "smooth",
+      });
+    });
+  }
+});
+
+const navbar = document.querySelector(".navbar");
+
+window.addEventListener("scroll", function () {
+  if (!navbar) return;
+  if (window.scrollY > 50) {
+    navbar.style.boxShadow = "0 10px 30px rgba(0,0,0,.08)";
+    navbar.style.padding = "12px 0";
+  } else {
+    navbar.style.boxShadow = "none";
+    navbar.style.padding = "18px 0";
+  }
+});
+
+const elements = document.querySelectorAll(
+  ".card,.gallery-img,.hero h1,.hero p",
+);
+
+const observer = new IntersectionObserver(
+  (entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.style.opacity = "1";
+        entry.target.style.transform = "translateY(0)";
+      }
+    });
+  },
+  { threshold: 0.2 },
+);
+
+elements.forEach((el) => {
+  el.style.opacity = "0";
+  el.style.transform = "translateY(40px)";
+  el.style.transition = ".8s";
+  observer.observe(el);
+});
+
+const numbers = document.querySelectorAll(".hero h2");
+
+numbers.forEach((item) => {
+  const value = item.innerText;
+  const num = parseInt(value);
+  if (isNaN(num)) return;
+  let start = 0;
+  const timer = setInterval(() => {
+    start += 10;
+    if (start >= num) {
+      item.innerText = value;
+      clearInterval(timer);
+    } else {
+      item.innerText = start;
+    }
+  }, 20);
+});
+
+const links = document.querySelectorAll(".nav-link");
+
+links.forEach((link) => {
+  link.addEventListener("click", () => {
+    links.forEach((l) => l.classList.remove("active"));
+    link.classList.add("active");
+  });
+});
+
+const topBtn = document.createElement("button");
+topBtn.innerHTML = '<i class="fa-solid fa-arrow-up"></i>';
+document.body.appendChild(topBtn);
+
+topBtn.style.position = "fixed";
+topBtn.style.bottom = "25px";
+topBtn.style.right = "25px";
+topBtn.style.width = "50px";
+topBtn.style.height = "50px";
+topBtn.style.border = "none";
+topBtn.style.borderRadius = "50%";
+topBtn.style.background = "#111";
+topBtn.style.color = "#fff";
+topBtn.style.cursor = "pointer";
+topBtn.style.display = "none";
+topBtn.style.zIndex = "999";
+
+window.addEventListener("scroll", () => {
+  if (window.scrollY > 300) {
+    topBtn.style.display = "block";
+  } else {
+    topBtn.style.display = "none";
+  }
+});
+
+topBtn.onclick = () => {
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth",
+  });
+};
+
+const journeySection = document.getElementById("journeySection");
+
+if (journeySection) {
+  window.addEventListener("scroll", () => {
+    const rect = journeySection.getBoundingClientRect();
+    const windowHeight = window.innerHeight;
+
+    if (rect.top <= windowHeight * 0.6 && rect.bottom >= 150) {
+      journeySection.classList.add("dark-journey");
+    } else {
+      journeySection.classList.remove("dark-journey");
+    }
+  });
+}

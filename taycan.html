@@ -1,103 +1,388 @@
-const navbar = document.querySelector(".navbar");
+<!DOCTYPE html>
+<html lang="ar" dir="ltr">
 
-window.addEventListener("scroll", function () {
-  if (window.scrollY > 50) {
-    navbar.style.boxShadow = "0 10px 30px rgba(0,0,0,.08)";
-    navbar.style.padding = "12px 0";
-  } else {
-    navbar.style.boxShadow = "none";
-    navbar.style.padding = "18px 0";
-  }
-});
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Porsche Taycan GTS - Official Experience</title>
 
-const elements = document.querySelectorAll(
-  ".card,.gallery-img,.hero h1,.hero p",
-);
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&family=Caveat:wght@700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="css/taycan style.css">
+</head>
 
-const observer = new IntersectionObserver(
-  (entries) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        entry.target.style.opacity = "1";
-        entry.target.style.transform = "translateY(0)";
-      }
-    });
-  },
-  { threshold: 0.2 },
-);
+<body>
 
-elements.forEach((el) => {
-  el.style.opacity = "0";
-  el.style.transform = "translateY(40px)";
-  el.style.transition = ".8s";
+    <section class="hero-section">
+        <div class="hero-image-container">
+            <img src="images/filters.avif" alt="Red Porsche Taycan GTS" class="hero-red-porsche-img">
+            <div class="hero-overlay"></div>
+        </div>
 
-  observer.observe(el);
-});
+        <div class="hero-content text-center">
+            <h1 class="taycan-script-logo animate-fade-down">Taycan</h1>
+            <p class="hero-subtitle animate-fade-up">Electrified Power. Pure Porsche GTS.</p>
+        </div>
+        <div class="scroll-down-indicator animate-bounce">
+            <span>Scroll to Explore</span>
+            <i class="fa-solid fa-chevron-down d-block mt-2"></i>
+        </div>
+    </section>
 
-const numbers = document.querySelectorAll(".hero h2");
+    <section class="model-selection-section text-center reveal-on-scroll" id="variant">
+        <div class="container">
+            <div class="model-toggle-pills mb-4">
+                <button class="pill-btn active">Sport Saloon</button>
+                <button class="pill-btn">Cross Turismo</button>
+            </div>
 
-numbers.forEach((item) => {
-  const value = item.innerText;
+            <h2 class="model-main-title display-3 fw-bold">Taycan GTS</h2>
+            <div class="mb-3">
+                <span class="badge-electric">All-Electric</span>
+            </div>
 
-  const num = parseInt(value);
+            <p class="model-price-text fs-3 fw-light">from US $ 189,500.00*</p>
 
-  if (isNaN(num)) return;
+            <div class="d-flex justify-content-center flex-wrap gap-3 my-4">
+                <button class="porsche-btn porsche-btn-main">Change model variant</button>
+                <button class="porsche-btn porsche-btn-outline">Configure</button>
+            </div>
+        </div>
+    </section>
 
-  let start = 0;
+    <section class="specs-section py-5 reveal-on-scroll">
+        <div class="container">
+            <div class="row align-items-center g-5">
+                <div class="col-lg-6">
+                    <div class="specs-grid">
+                        <div class="spec-card">
+                            <div class="spec-number">3.3 <span class="unit">s</span></div>
+                            <div class="spec-label">Acceleration 0 - 100 km/h with Launch Control</div>
+                        </div>
 
-  const timer = setInterval(() => {
-    start += 10;
+                        <div class="spec-card">
+                            <div class="spec-number">515 <span class="unit">kW</span> / 700 <span class="unit">PS</span>
+                            </div>
+                            <div class="spec-label">Overboost Power with Launch Control up to</div>
+                        </div>
 
-    if (start >= num) {
-      item.innerText = value;
-      clearInterval(timer);
-    } else {
-      item.innerText = start;
-    }
-  }, 20);
-});
+                        <div class="spec-card">
+                            <div class="spec-number">250 <span class="unit">km/h</span></div>
+                            <div class="spec-label">Top speed</div>
+                        </div>
+                    </div>
+                </div>
 
-const links = document.querySelectorAll(".nav-link");
+                <div class="col-lg-6">
+                    <div class="car-front-image-wrap zoom-hover">
+                        <img src="images/960.jpg" alt="Red Porsche Taycan GTS Front" class="img-fluid rounded-4 shadow-lg">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-links.forEach((link) => {
-  link.addEventListener("click", () => {
-    links.forEach((l) => l.classList.remove("active"));
+    <section class="overfeel-section py-5 reveal-on-scroll">
+        <div class="container py-5">
+            <div class="row g-5 align-items-center">
+                <div class="col-lg-5">
+                    <h2 class="display-3 fw-bold mb-4">Overfeel.</h2>
+                    <p class="lead mb-4">
+                        The overwhelming feeling of sitting in an amazing electric sports car. The optional E-Shift
+                        makes the driving experience even more intense. Precisely simulated gear changes sharpen
+                        dynamics and perception — noticeably, audibly and visibly</p>
+                    <div class="eshift-badge d-inline-block">
+                        <i class="fa-solid fa-bolt me-1"></i> E-SHIFT DYNAMICS
+                    </div>
+                </div>
+                <div class="col-lg-7">
+                    <div class="overfeel-card zoom-hover">
+                        <img src="images/koool.webp" alt="Porsche Taycan Cockpit Interior" class="img-fluid rounded-4 shadow">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-    link.classList.add("active");
-  });
-});
+    <section class="highlights-section py-5 reveal-on-scroll">
+        <div class="container">
+            <div class="d-flex justify-content-between align-items-end mb-4">
+                <h2 class="fw-bold fs-1">Taycan GTS Highlights</h2>
+                <div class="slider-arrows">
+                    <button id="slideLeft" class="arrow-btn"><i class="fa-solid fa-chevron-left"></i></button>
+                    <button id="slideRight" class="arrow-btn"><i class="fa-solid fa-chevron-right"></i></button>
+                </div>
+            </div>
 
-const topBtn = document.createElement("button");
+            <div class="cards-carousel" id="highlightsCarousel">
 
-topBtn.innerHTML = '<i class="fa-solid fa-arrow-up"></i>';
+                <div class="carousel-item-card">
+                    <img src="images/1357373.jpeg" alt="Red Porsche Taycan Side Profile">
+                    <div class="card-content">
+                        <h4>911 GT3 RS</h4>
+                        <p>Every athlete knows the absolute willingness to question everything is crucial to achieving a
+                            top performance. With this attitude, Porsche continues to push back the boundaries of what
+                            is possible.</p>
+                    </div>
+                </div>
 
-document.body.appendChild(topBtn);
+                <div class="carousel-item-card">
+                    <img src="images/lllo.jpg" alt="Red Porsche Taycan Side Profile">
+                    <div class="card-content">
+                        <h4>GTS DNA</h4>
+                        <p>Three legendary letters that charge the all-electric Taycan with genuine Porsche performance.
+                        </p>
+                    </div>
+                </div>
 
-topBtn.style.position = "fixed";
-topBtn.style.bottom = "25px";
-topBtn.style.right = "25px";
-topBtn.style.width = "50px";
-topBtn.style.height = "50px";
-topBtn.style.border = "none";
-topBtn.style.borderRadius = "50%";
-topBtn.style.background = "#111";
-topBtn.style.color = "#fff";
-topBtn.style.cursor = "pointer";
-topBtn.style.display = "none";
-topBtn.style.zIndex = "999";
+                
+                <div class="carousel-item-card">
+                    <img src="images/Cover.jpg" alt="Porsche GTS Wheels">
+                    <div class="card-content">
+                        <h4>Porsche Active Ride</h4>
+                        <p>Exhilarating road handling and active suspension tuned specifically for the GTS lineup.</p>
+                    </div>
+                </div>
 
-window.addEventListener("scroll", () => {
-  if (window.scrollY > 300) {
-    topBtn.style.display = "block";
-  } else {
-    topBtn.style.display = "none";
-  }
-});
+                <div class="carousel-item-card">
+                    <img src="images/iris (2).webp" alt="Porsche Rear Lightbar">
+                    <div class="card-content">
+                        <h4>GTS Styling</h4>
+                        <p>SportDesign front apron, side skirts with black inserts, and distinctive rear diffuser.</p>
+                    </div>
+                </div>
 
-topBtn.onclick = () => {
-  window.scrollTo({
-    top: 0,
+                <div class="carousel-item-card">
+                    <img src="images/race.jpg"
+                        alt="Race-Tex Porsche Interior">
+                    <div class="card-content">
+                        <h4>Race-Tex Cockpit</h4>
+                        <p>High-quality Race-Tex materials and contrast stitching create a Motorsport environment.</p>
+                    </div>
+                </div>
 
-    behavior: "smooth",
-  });
-};
+            </div>
+        </div>
+    </section>
+
+    <section class="interactive-preview-section py-5 reveal-on-scroll" id="configure">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="fw-bold fs-1">Energetic. From every perspective.</h2>
+            </div>
+
+            <div class="row align-items-center g-4">
+                <div class="col-lg-8">
+                    <div class="interactive-car-stage text-center">
+                        <img id="carInteractiveImg" src="images/red.jpeg" alt="Porsche Taycan Red"
+                            class="img-fluid rounded-4 shadow-lg transition-img">
+                    </div>
+                </div>
+
+                <div class="col-lg-4">
+                    <div class="config-panel p-4 rounded-4 shadow-sm">
+                        <h5 class="fw-bold mb-3">Exterior Colour</h5>
+                        <div class="d-flex gap-3 mb-4">
+
+                            <span class="color-swatch active" style="background:#d5001c;" data-img="images/red.jpeg"
+                                title="Carmine Red"></span>
+
+                            <span class="color-swatch" style="background:#000000;" data-img="images/Bla.jpeg"
+                                title="Jet Black Metallic"></span>
+
+                            <span class="color-swatch" style="background:#ffffff; border:1px solid #ccc;"
+                                data-img="images/Wight.jpeg" title="Carrera White"></span>
+
+                            <span class="color-swatch" style="background:green; border:1px solid #ccc;"
+                                data-img="images/fsyy.jpg" title="Carrera White"></span>
+
+                            <span class="color-swatch" style="background:blue; border:1px solid #ccc;"
+                                data-img="images/gtr.jpg" title="Carrera White"></span>
+                        </div>
+
+                        <button class="porsche-btn porsche-btn-main w-100 mt-3">Configure Your Taycan</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="compare-section py-5 reveal-on-scroll" id="compare">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="fw-bold fs-1">Which Taycan model is right for you?</h2>
+            </div>
+
+            <div class="row g-4">
+                <div class="col-md-6 col-lg-3">
+                    <div class="compare-card">
+                        <img src="images/Porsche-911-992-adelante.jpg" alt="Porsche Taycan Base">
+                        <h4>Taycan</h4>
+                        <p class="price">from US $ 138,900.00*</p>
+                        <ul class="card-specs-list">
+                            <li><strong>4.8 s</strong> 0 - 100 km/h</li>
+                            <li><strong>300 kW / 408 PS</strong> Power</li>
+                            <li><strong>230 km/h</strong> Top speed</li>
+                        </ul>
+                        <button class="porsche-btn porsche-btn-outline w-100">Details</button>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-3">
+                    <div class="compare-card">
+                        <img src="images/2020-porsche-taycan_100714962_h.jpg" alt="Porsche Taycan 4">
+                        <h4>Taycan 4</h4>
+                        <p class="price">from US $ 142,900.00*</p>
+                        <ul class="card-specs-list">
+                            <li><strong>4.6 s</strong> 0 - 100 km/h</li>
+                            <li><strong>320 kW / 435 PS</strong> Power</li>
+                            <li><strong>230 km/h</strong> Top speed</li>
+                        </ul>
+                        <button class="porsche-btn porsche-btn-outline w-100">Details</button>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-3">
+                    <div class="compare-card">
+                        <img src="images/2016_porsche.webp" alt="Porsche Taycan Black Edition">
+                        <h4>Taycan Black Edition</h4>
+                        <p class="price">from US $ 162,700.00*</p>
+                        <ul class="card-specs-list">
+                            <li><strong>4.8 s</strong> 0 - 100 km/h</li>
+                            <li><strong>320 kW / 435 PS</strong> Power</li>
+                            <li><strong>250 km/h</strong> Top speed</li>
+                        </ul>
+                        <button class="porsche-btn porsche-btn-outline w-100">Details</button>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-3">
+                    <div class="compare-card">
+                        <img src="images/OIP.webp" alt="Porsche Taycan GTS Red">
+                        <h4>Taycan GTS</h4>
+                        <p class="price">from US $ 189,500.00*</p>
+                        <ul class="card-specs-list">
+                            <li><strong>3.3 s</strong> 0 - 100 km/h</li>
+                            <li><strong>515 kW / 700 PS</strong> Power</li>
+                            <li><strong>250 km/h</strong> Top speed</li>
+                        </ul>
+                        <button class="porsche-btn porsche-btn-outline w-100">Details</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="battery-guarantee-section py-5">
+        <div class="container">
+            <div class="row align-items-center">
+
+                <div class="col-lg-7 mb-4 mb-lg-0">
+                    <div class="battery-img-container">
+                        <img src="images/gty.jpg" alt="Porsche High-Voltage Battery" class="img-fluid rounded">
+                    </div>
+                </div>
+
+                <div class="col-lg-5">
+                    <h2 class="battery-title fw-bold mb-4">Porsche High-Voltage battery guarantee.</h2>
+
+                    <p class="battery-desc mb-3">
+                        Every new, all-electric Porsche is delivered with a worldwide guarantee against material and
+                        manufacturing defects on the high-voltage (HV) battery, which is valid for eight years or up to
+                        160,000 km/100,000 miles.
+                    </p>
+
+                    <p class="battery-desc mb-4">
+                        In addition, we guarantee a minimum residual capacity of the high-voltage battery throughout the
+                        warranty period¹.
+                    </p>
+
+                    <p class="battery-note text-muted">
+                        ¹80% of the original net battery capacity is guaranteed for up to three years or 60,000
+                        km/38,000 miles, after which Porsche guarantee at least 70% residual capacity until the end of
+                        the HV battery guarantee.
+                    </p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+
+    <footer class="porsche-footer">
+        <div class="container">
+
+            <div class="footer-region mb-5">
+                <p class="region-title text-uppercase small mb-2">Current Region / Language</p>
+                <div class="d-flex align-items-center">
+                    <img src="https://cdn.ui.porsche.com/porsche-design-system/flags/eg.3d6e702.svg" width="24"
+                        alt="Egypt flag" class="me-2">
+                    <span class="fw-bold me-2">Egypt / English</span>
+                    <a href="#" class="change-lang-link">Change</a>
+                </div>
+            </div>
+
+            <div class="row mb-5">
+                <div class="col-md-6 mb-4 mb-md-0">
+                    <h5 class="footer-col-title text-uppercase small mb-3">Company</h5>
+                    <ul class="list-unstyled footer-links">
+                        <li><a href="#">Porsche Centre Egypt</a></li>
+                        <li><a href="#">Career</a></li>
+                        <li><a href="#">Global Partnership Council</a></li>
+                        <li><a href="#">Compliance</a></li>
+                        <li><a href="#">Sustainability</a></li>
+                        <li><a href="#">Newsroom & Press</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-6">
+                    <h5 class="footer-col-title text-uppercase small mb-3">Porsche on the web</h5>
+                    <ul class="list-unstyled footer-links">
+                        <li><a href="#">Porsche Homepage</a></li>
+                        <li><a href="#">Porsche Configurator</a></li>
+                        <li><a href="#">Find New and Pre-owned Vehicles</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div
+                class="footer-social-apps d-flex flex-wrap justify-content-between align-items-center pb-4 mb-4 border-bottom">
+                <div class="social-icons d-flex gap-3 mb-3 mb-md-0 fs-5">
+                    <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="#" aria-label="Pinterest"><i class="fab fa-pinterest-p"></i></a>
+                    <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                    <a href="#" aria-label="X (Twitter)"><i class="fab fa-x-twitter"></i></a>
+                    <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+                <div class="app-badges d-flex gap-2">
+                    <a href="#" class="badge-link">Google Play</a>
+                    <a href="#" class="badge-link">App Store</a>
+                </div>
+            </div>
+
+            <div class="footer-bottom small">
+                <p class="mb-2">© 2026 Porsche Centre Egypt - SMG ENGINEERING AUTOMOTIVE CO. - Egypt.</p>
+                <div class="legal-links d-flex flex-wrap gap-3">
+                    <a href="#">Legal Notice</a>
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Open Source Software Notice</a>
+                    <a href="#">Whistleblower System</a>
+                </div>
+            </div>
+
+        </div>
+        <div class="container text-center mt-4">
+            <div class="porsche-footer-logo mb-3"
+                style="font-size: 3rem; font-weight: 900; letter-spacing: 12px; opacity: 0.35;">PORSCHE</div>
+            <p class="m-0 text-muted">&copy; 2026 Porsche Centre Egypt. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="taycan script.js"></script>
+</body>
+
+</html>

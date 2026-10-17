@@ -1,0 +1,411 @@
+body {
+  font-family:
+    "Inter",
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    sans-serif;
+  background-color: #000;
+  color: #fff;
+  margin: 0;
+  padding: 0;
+  -webkit-font-smoothing: antialiased;
+}
+
+.porsche-fixed-header {
+  z-index: 1050;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  transition: all 0.3s ease;
+}
+
+.hero-section {
+  background-color: #000;
+  padding-top: 80px;
+}
+
+.bg-video {
+  object-fit: cover;
+  z-index: 0;
+  transform: scale(1.2);
+  transform-origin: center center;
+}
+
+.bg-overlay {
+  z-index: 1;
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0.6) 0%,
+    rgba(0, 0, 0, 0.2) 50%,
+    rgba(0, 0, 0, 0.8) 100%
+  );
+}
+
+main {
+  z-index: 5;
+}
+
+.porsche-brand {
+  font-family: "Arial Black", sans-serif;
+  letter-spacing: 8px;
+  font-weight: 900;
+}
+
+.menu-btn {
+  background: transparent;
+  transition: opacity 0.2s ease;
+}
+
+.menu-btn:hover {
+  opacity: 0.8;
+}
+
+.flag-icon {
+  object-fit: cover;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.max-width-lg {
+  max-width: 850px;
+}
+
+.hero-title {
+  letter-spacing: -0.5px;
+  line-height: 1.1;
+}
+
+.hero-description {
+  line-height: 1.5;
+  max-width: 780px;
+  color: #e0e0e0;
+}
+
+.btn-circle-icon {
+  width: 48px;
+  height: 48px;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.btn-circle-icon:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: scale(1.05);
+}
+
+.porsche-sidebar {
+  width: 720px !important;
+  background-color: transparent;
+  border: none;
+  color: #000000;
+}
+
+.main-menu-col {
+  background-color: #ffffff;
+  height: 100%;
+  width: 320px;
+}
+
+.main-menu-col .menu-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 40px !important;
+}
+
+.main-menu-col .menu-item {
+  text-decoration: none;
+  color: #000000;
+  font-size: 1.15rem;
+  font-weight: 500;
+  padding: 16px 20px;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+}
+
+.main-menu-col .menu-item:hover,
+.main-menu-col .menu-item.active {
+  background-color: #f2f2f2;
+}
+
+.main-menu-col .icon-arrow {
+  font-size: 0.85rem;
+  color: #555;
+}
+
+.sub-menu-col {
+  background-color: #f3f4f6;
+  height: 100%;
+  flex-grow: 1;
+}
+
+.sub-menu-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-top: 40px !important;
+  padding-left: 20px;
+}
+
+.sub-menu-item {
+  text-decoration: none;
+  color: #000000;
+  font-size: 1.1rem;
+  font-weight: 500;
+  padding: 8px 16px;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+  display: inline-block;
+}
+
+.sub-menu-item.active {
+  background-color: #e5e7eb;
+}
+
+.sub-menu-item:hover:not(.active) {
+  background-color: rgba(229, 231, 235, 0.6);
+}
+
+.models-section {
+  font-family: "Inter", sans-serif;
+}
+
+.card {
+  border: none;
+  border-radius: 20px;
+  overflow: hidden;
+  transition: 0.4s;
+}
+
+.card:hover {
+  transform: translateY(-12px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+}
+
+.card-overlay {
+  background: linear-gradient(
+    0deg,
+    rgba(0, 0, 0, 0.8) 0%,
+    rgba(0, 0, 0, 0.3) 60%,
+    transparent 100%
+  );
+  z-index: 2;
+}
+
+.btn-circle-arrow {
+  width: 42px;
+  height: 42px;
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(6px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  transition:
+    background-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.card:hover .btn-circle-arrow {
+  background: rgba(255, 255, 255, 0.4);
+  transform: scale(1.05);
+}
+
+.section-title {
+  letter-spacing: -1.5px;
+  font-weight: 500;
+}
+
+.journey-title {
+  font-weight: 500;
+  letter-spacing: -1px;
+}
+
+#journeySection {
+  background-color: #ffffff;
+  color: #000000;
+  transition:
+    background-color 0.8s ease,
+    color 0.8s ease;
+}
+
+#journeySection .journey-title {
+  transition: color 0.8s ease;
+}
+
+#journeySection.dark-journey {
+  background-color: #000000 !important;
+  color: #ffffff !important;
+}
+
+#journeySection.dark-journey .journey-title {
+  color: #ffffff !important;
+}
+
+.porsche-model-card {
+  height: 460px;
+  background-color: #111;
+  cursor: pointer;
+  color: #ffffff;
+}
+
+.porsche-model-card .card-bg-img {
+  transition: transform 0.5s ease;
+}
+
+.porsche-model-card:hover .card-bg-img {
+  transform: scale(1.04);
+}
+
+.porsche-model-card .card-content {
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0.7) 0%,
+    rgba(0, 0, 0, 0) 40%,
+    rgba(0, 0, 0, 0.85) 100%
+  );
+  z-index: 2;
+  color: #ffffff;
+}
+
+.model-logo {
+  font-style: italic;
+  font-weight: 900;
+  font-size: 3.2rem;
+  letter-spacing: 2px;
+  color: #ffffff !important;
+}
+
+.model-desc {
+  color: #ffffff !important;
+}
+
+.porsche-badge {
+  display: inline-block;
+  padding: 4px 12px;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(8px);
+  border-radius: 6px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: #ffffff !important;
+}
+
+.btn-explore-hover {
+  width: 44px;
+  height: 44px;
+  border-radius: 50px;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  transition:
+    width 0.4s ease,
+    background 0.3s ease,
+    padding 0.4s ease;
+  padding: 0;
+  white-space: nowrap;
+  color: #ffffff !important;
+}
+
+.btn-explore-hover .explore-text {
+  opacity: 0;
+  width: 0;
+  transition:
+    opacity 0.3s ease,
+    width 0.3s ease;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #ffffff !important;
+}
+
+.porsche-model-card:hover .btn-explore-hover {
+  width: 115px;
+  padding: 0 16px;
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.porsche-model-card:hover .btn-explore-hover .explore-text {
+  opacity: 1;
+  width: auto;
+  margin-right: 8px;
+}
+
+.porsche-banner-card {
+  background-color: #111;
+  transition:
+    transform 0.4s ease,
+    box-shadow 0.4s ease;
+}
+
+.porsche-banner-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.18) !important;
+}
+
+.banner-content-col {
+  background-color: #111;
+}
+
+.banner-img-col {
+  min-height: 400px;
+}
+
+.banner-image {
+  transition: transform 0.6s ease;
+}
+
+.porsche-banner-card:hover .banner-image {
+  transform: scale(1.04);
+}
+
+.banner-btn {
+  transition: all 0.3s ease;
+}
+
+.banner-btn:hover {
+  background-color: #000 !important;
+  color: #fff !important;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(255, 255, 255, 0.2);
+}
+
+.discover-card {
+  height: 440px;
+  background-color: #111;
+  cursor: pointer;
+  border-radius: 20px;
+  transition:
+    transform 0.4s ease,
+    box-shadow 0.4s ease;
+}
+
+.discover-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15) !important;
+}
+
+.discover-card .card-bg-img {
+  transition: transform 0.6s ease;
+}
+
+.discover-card:hover .card-bg-img {
+  transform: scale(1.04);
+}
+
+.discover-card .card-content {
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0.2) 0%,
+    rgba(0, 0, 0, 0) 50%,
+    rgba(0, 0, 0, 0.85) 100%
+  );
+  z-index: 2;
+}
